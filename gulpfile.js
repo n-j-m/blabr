@@ -16,13 +16,14 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
     merge = require('merge-stream'),
+    runSequence = require('run-sequence'),
     p = {
       vendor: {
         css: [
-          '../node_modules/bootstrap/dist/css/bootstrap.min.css',
-          '../node_modules/bootstrap/dist/css/bootstrap.css.map'
+          './node_modules/bootstrap/dist/css/bootstrap.min.css',
+          './node_modules/bootstrap/dist/css/bootstrap.css.map'
         ],
-        fonts: '../node_modules/bootstrap/dist/fonts/*'
+        fonts: './node_modules/bootstrap/dist/fonts/*'
       },
       src: './src',
       jsx: './src/scripts/app.jsx',
@@ -102,13 +103,13 @@ gulp.task('watchTask', function() {
   gulp.watch(p.html, ['statics']);
 });
 
-gulp.task('watch', ['clean'], function() {
-  gulp.start(['browserSync', 'watchTask', 'statics', 'watchify', 'styles']);
+gulp.task('watch', function(callback) {
+  runSequence('clean', 'watchTask', 'statics', 'styles', 'browserSync', 'watchify', callback);
 });
 
-gulp.task('build', ['clean'], function() {
+gulp.task('build', function(callback) {
   process.env.NODE_ENV = 'production';
-  gulp.start(['browserify', 'statics', 'styles']);
+  runSequence('clean', ['browserify', 'statics', 'styles'], callback);
 });
 
 gulp.task('default', function() {
