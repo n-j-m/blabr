@@ -3,6 +3,17 @@
 var React = require('react');
 window.React = React;
 
-var MyComponent = require('./components/mycomponent.jsx');
+var Login = require('./components/Login.jsx');
+var Convos = require('./components/Convos.jsx');
 
-React.render(<MyComponent />, document.getElementById('content'));
+var App = React.createClass({
+
+  render: function() {
+    return (
+      <Convos />
+    );
+  }
+
+})
+
+React.render(<App />, document.getElementById('content'));

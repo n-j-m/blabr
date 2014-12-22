@@ -23,7 +23,7 @@ var gulp = require('gulp'),
           './node_modules/bootstrap/dist/css/bootstrap.min.css',
           './node_modules/bootstrap/dist/css/bootstrap.css.map'
         ],
-        fonts: './node_modules/bootstrap/dist/fonts/*'
+        fonts: './node_modules/bootstrap/dist/fonts/**/*'
       },
       src: './src',
       jsx: './src/scripts/app.jsx',
@@ -93,7 +93,7 @@ gulp.task('styles', function() {
     .pipe(less({errLogToConsole: true}))
     .on('error', notify.onError())
     .pipe(autoprefixer('last 1 version'))
-    .pipe(csso())
+    // .pipe(csso())
     .pipe(gulp.dest(p.distCss))
     .pipe(reload({stream: true}));
 });
